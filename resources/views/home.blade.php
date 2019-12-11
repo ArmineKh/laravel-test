@@ -33,7 +33,7 @@
                         <a class = "btn " href="#">All users</a>
                       </div>
                       <div class="row">
-                        <a class = "btn " href="#">All employeis</a>
+                        <a class = "btn " href="{{url('/employees')}}">All employeis</a>
                       </div>
                       <div class="row">
                         <a class = "btn " href="#">All companeis</a>
