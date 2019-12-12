@@ -1,5 +1,5 @@
 
-@extends('layouts.master')
+@extends('layouts.app')
 @section('title','Create Employee')
 @section('content')
  <div class="row mt-5">
@@ -15,8 +15,12 @@
          <input type="text" name = "lastname" id = "lastname" class="form-control" required>
        </div>
        <div class="form-group">
-         <label for="department">Department:</label>
+         <label for="department">Company:</label>
          <input type="text" name = "department" id = "department" class="form-control" required>
+       </div>
+       <div class="form-group">
+         <label for="department">Email:</label>
+         <input type="email" name = "email" id = "email" class="form-control" required>
        </div>
        <div class="form-group">
          <label for="phone">Phone Number:</label>

@@ -15,16 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes(['register' => false]);
+Auth::routes([
+  'register' => false, // Registration Routes...
+  'reset' => false, // Password Reset Routes...
+  'verify' => false, // Email Verification Routes...
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/isadmin', "AdminController@isadmin");
-Route::get('admin', 'AdminController@goToAdminPage');
-Route::get('/profile', 'UserController@profilePage');
-Route::get('/verify/{id}', 'AdminController@verify');
-Route::get('/delete/{id}', 'AdminController@delete');
-
+Route::get('/user/{id}/delete','HomeController@destroy')->name('user.destroy');
 
 Route::get('/employees', 'EmployeeController@index')->name('employees.index');
 Route::get('/employees/{id}/edit','EmployeeController@edit')->name('employees.edit');
@@ -32,3 +31,11 @@ Route::get('/employees/{id}/delete','EmployeeController@destroy')->name('employe
 Route::get('/create','EmployeeController@create')->name('employees.create');
 Route::post('/create','EmployeeController@store')->name('employees.store');
 Route::post('/employee/update','EmployeeController@update')->name('employees.update');
+
+
+Route::get('/company', 'CompanyController@index')->name('company.index');
+Route::get('/company/{id}/edit','CompanyController@edit')->name('company.edit');
+Route::get('/company/{id}/delete','CompanyController@destroy')->name('company.destroy');
+Route::get('/compCreate','CompanyController@create')->name('company.create');
+Route::post('/compCreate','CompanyController@store')->name('company.store');
+Route::post('/company/update','CompanyController@update')->name('company.update');

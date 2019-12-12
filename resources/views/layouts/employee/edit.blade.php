@@ -1,6 +1,7 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('title','Edit Employee')
 @section('content')
+
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
       <form action="{{route('employees.update')}}" method = "post">
@@ -14,8 +15,12 @@
           <input type="text" name = "lastname" id = "lastname" class="form-control" required value = "{{$employee->lastname}}">
         </div>
         <div class="form-group">
-          <label for="department">Department:</label>
+          <label for="department">Company:</label>
           <input type="text" name = "department" id = "department" class="form-control" required value = "{{$employee->department}}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" name = "email" id = "email" class="form-control" required value = "{{$employee->email}}">
         </div>
         <div class="form-group">
           <label for="phone">Phone Number:</label>

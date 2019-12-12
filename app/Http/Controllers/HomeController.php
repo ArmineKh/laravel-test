@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use  App\User;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $users = User::all();
+      return view('home',['users'=>$users]);
+        // return view('home');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //Retrieve the employee
+        $users = User::find($id);
+        //delete
+        $users->delete();
+        return redirect()->route('home');
     }
 }

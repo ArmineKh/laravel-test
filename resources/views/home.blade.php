@@ -1,48 +1,45 @@
 
 @extends('layouts.app')
-
+@section('title','Users Index')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-
-                    @if (session('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ session('error') }}
-                    </div>
-                    @endif
-
-
-
-                    <div class="container">
-                        Welcom! You are logged in.
-                    </div>
-                    @if(Auth::user()->id == 1)
-                    <div class="container">
-                      <div class="row">
-                        <a class = "btn " href="#">All users</a>
-                      </div>
-                      <div class="row">
-                        <a class = "btn " href="{{url('/employees')}}">All employeis</a>
-                      </div>
-                      <div class="row">
-                        <a class = "btn " href="#">All companeis</a>
-                      </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="row">
+<div class="col-sm-12">
+  <h2>  Welcom dear {{Auth::user()->name }}! You are logged in.</h2>
 </div>
+
+</div>
+
+@if(Auth::user()->id == 1)
+<div class="row">
+  <div class="col-sm-12">
+    <a class = "btn btn-info" href="{{url('company')}}">All companeis</a>
+    <a class = "btn btn-info" href="{{url('employees')}}">All employeis</a>
+
+  </div>
+</div>
+  <div class="row">
+    <caption>List of users</caption>
+    <div class="col-sm-12">
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+
+        </tr>
+
+         @foreach($users as $user)
+          <tr class = "text-center">
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td><a href="{{route('user.destroy',['id'=>$user->id])}}" class = "btn btn-danger">Delete</a></td>
+          </tr>
+        @endforeach
+
+      </table>
+    </div>
+  
+  </div>
+    @endif
 @endsection

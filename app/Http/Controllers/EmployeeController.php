@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -16,7 +17,9 @@ class EmployeeController extends Controller
    public function index()
    {
        //Show all employees from the database and return to view
-       $employees = Employee::all();
+       $employees = DB::table('employees')->paginate(10);
+
+       // $employees = Employee::all()->paginate(10);
        return view('layouts.employee.index',['employees'=>$employees]);
    }
    /**
@@ -27,7 +30,7 @@ class EmployeeController extends Controller
    public function create()
    {
        //Return view to create employee
-       return view('layouts.employees.create');
+       return view('layouts.employee.create');
    }
    /**
     * Store a newly created resource in storage.
@@ -42,9 +45,10 @@ class EmployeeController extends Controller
        $employee = new Employee();
        //input method is used to get the value of input with its
        //name specified
-       $employee->firstname = $request->input('firstname');
+       $employee->name = $request->input('firstname');
        $employee->lastname = $request->input('lastname');
-       $employee->department = $request->input('department');
+       $employee->company = $request->input('department');
+       $employee->email = $request->input('email');
        $employee->phone = $request->input('phone');
        $employee->save(); //persist the data
        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
@@ -72,9 +76,10 @@ class EmployeeController extends Controller
    {
        //Retrieve the employee and update
        $employee = Employee::find($request->input('id'));
-       $employee->firstname = $request->input('firstname');
+       $employee->name = $request->input('firstname');
        $employee->lastname = $request->input('lastname');
-       $employee->department = $request->input('department');
+       $employee->company = $request->input('department');
+       $employee->email = $request->input('email');
        $employee->phone = $request->input('phone');
        $employee->save(); //persist the data
        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
