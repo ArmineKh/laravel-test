@@ -7,19 +7,19 @@
      <form action="{{route('employees.store')}}" method = "post">
        @csrf
        <div class="form-group">
-         <label for="firstname">Firstname:</label>
-         <input type="text" name = "firstname" id = "firstname" class="form-control" required>
+         <label for="name">Firstname:</label>
+         <input type="text" name = "name" id = "name" class="form-control" required>
        </div>
        <div class="form-group">
-         <label for="lastname">Lastname:</label>
-         <input type="text" name = "lastname" id = "lastname" class="form-control" required>
+         <label for="lastName">Lastname:</label>
+         <input type="text" name = "lastName" id = "lastName" class="form-control" required>
        </div>
        <div class="form-group">
-         <label for="department">Company:</label>
-         <input type="text" name = "department" id = "department" class="form-control" required>
+         <label for="company">Company:</label>
+         <input type="text" name = "company" id = "company" class="form-control" required>
        </div>
        <div class="form-group">
-         <label for="department">Email:</label>
+         <label for="email">Email:</label>
          <input type="email" name = "email" id = "email" class="form-control" required>
        </div>
        <div class="form-group">

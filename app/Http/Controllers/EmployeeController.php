@@ -16,12 +16,11 @@ class EmployeeController extends Controller
     */
    public function index()
    {
-       //Show all employees from the database and return to view
+       //Show all employees from the database and return to view whith pagination
        $employees = DB::table('employees')->paginate(10);
-
-       // $employees = Employee::all()->paginate(10);
        return view('layouts.employee.index',['employees'=>$employees]);
    }
+
    /**
     * Show the form for creating a new resource.
     *
@@ -32,6 +31,7 @@ class EmployeeController extends Controller
        //Return view to create employee
        return view('layouts.employee.create');
    }
+
    /**
     * Store a newly created resource in storage.
     *
@@ -47,12 +47,13 @@ class EmployeeController extends Controller
        //name specified
        $employee->name = $request->input('firstname');
        $employee->lastname = $request->input('lastname');
-       $employee->company = $request->input('department');
+       $employee->company = $request->input('company');
        $employee->email = $request->input('email');
        $employee->phone = $request->input('phone');
        $employee->save(); //persist the data
        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
    }
+
    /**
     * Show the form for editing the specified resource.
     *
@@ -65,6 +66,7 @@ class EmployeeController extends Controller
        $employee = Employee::find($id);
        return view('layouts.employee.edit',['employee'=> $employee]);
    }
+
    /**
     * Update the specified resource in storage.
     *
@@ -76,14 +78,15 @@ class EmployeeController extends Controller
    {
        //Retrieve the employee and update
        $employee = Employee::find($request->input('id'));
-       $employee->name = $request->input('firstname');
-       $employee->lastname = $request->input('lastname');
-       $employee->company = $request->input('department');
+       $employee->name = $request->input('name');
+       $employee->lastName = $request->input('lastName');
+       $employee->company = $request->input('company');
        $employee->email = $request->input('email');
        $employee->phone = $request->input('phone');
        $employee->save(); //persist the data
        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
    }
+
    /**
     * Remove the specified resource from storage.
     *
@@ -98,4 +101,5 @@ class EmployeeController extends Controller
        $employee->delete();
        return redirect()->route('employees.index');
    }
+   
 }

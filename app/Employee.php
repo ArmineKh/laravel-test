@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     //
-  // protected $fillable = ['firstname','lastname', 'description', 'phone'];
-  public function employee()
+  public function company()
  {
-     return $this->belongsTo('App\Employee');
+     return $this->belongsTo('App\Company');
  }
 }

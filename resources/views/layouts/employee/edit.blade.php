@@ -7,16 +7,16 @@
       <form action="{{route('employees.update')}}" method = "post">
         @csrf
         <div class="form-group">
-          <label for="firstname">Firstname:</label>
-          <input type="text" name = "firstname" id = "firstname" class="form-control" required value = "{{$employee->firstname}}">
+          <label for="name">Firstname:</label>
+          <input type="text" name = "name" id = "name" class="form-control" required value = "{{$employee->name}}">
         </div>
         <div class="form-group">
-          <label for="lastname">Lastname:</label>
-          <input type="text" name = "lastname" id = "lastname" class="form-control" required value = "{{$employee->lastname}}">
+          <label for="lastName">Lastname:</label>
+          <input type="text" name = "lastName" id = "lastName" class="form-control" required value = "{{$employee->lastname}}">
         </div>
         <div class="form-group">
-          <label for="department">Company:</label>
-          <input type="text" name = "department" id = "department" class="form-control" required value = "{{$employee->department}}">
+          <label for="company">Company:</label>
+          <input type="text" name = "company" id = "company" class="form-control" required value = "{{$employee->company}}">
         </div>
         <div class="form-group">
           <label for="email">Email:</label>

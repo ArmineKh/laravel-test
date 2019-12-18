@@ -24,9 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+      //Show all Users from the database and return to view
       $users = User::all();
       return view('home',['users'=>$users]);
-        // return view('home');
+
     }
 
     /**
@@ -37,10 +38,11 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //Retrieve the employee
+        //Retrieve the user
         $users = User::find($id);
         //delete
         $users->delete();
         return redirect()->route('home');
     }
+    
 }
