@@ -2,118 +2,114 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
-use App\Company;
+use App\Http\Requests\CreateCompanieRequest;
 use Storage;
 use DB;
 
-
 class CompanyController extends Controller
 {
-    //
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-   public function index()
-   {
-       //Show all Companyes from the database and return to view
-       $companyes = DB::table('companies')->paginate(10);
-       return view('layouts.company.index',['companyes'=>$companyes]);
-   }
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $companyes = Company::paginate(10);
+      return view('company.index',['companyes'=>$companyes]);
+    }
 
-   /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-   public function create()
-   {
-       //Return view to create Companyes
-       return view('layouts.company.create');
-   }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+               return view('company.create');
+    }
 
-   /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-   public function store(Request $request)
-   {
-       //Persist the Companyes in the database
-       //form data is available in the request object
-       $company = new Company();
-       //input method is used to get the value of input with its
-       //name specified
-       $logoName = '';
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CreateCompanieRequest $request)
+    {
+        //
+
+               $logoName = '';
+                if ($request->file('logo'))
+                {
+                    $logoName = $request->file('logo')->store('/public');
+                    $logoName = str_replace('public', 'storage', $logoName);
+                }
+                $company = Company::create(['name' => $request->input('name'),
+                                            'email' => $request->input('email'),
+                                            'logo' => $logoName,
+                                            'website' => $request->input('website')]);
+
+
+               return redirect()->route('company.index')->with('info','Company Added Successfully');
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Company  $company
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+        $comp = Company::find($id);
+        return view('company.edit',['company'=> $comp]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Company  $company
+     * @return \Illuminate\Http\Response
+     */
+    public function update(CreateCompanieRequest $request, $id)
+    {
+        //
+        $logoName = '';
         if ($request->file('logo'))
         {
-            $logoName = $request->file('logo')->store('/public');
-            $logoName = str_replace('public', 'storage', $logoName);
-        }
-       $company->name = $request->input('name');
-       $company->email = $request->input('email');
-       $company->logo = $logoName;
-       $company->website = $request->input('website');
-       $company->save(); //persist the data
+             $logoName = $request->file('logo')->store('/public');
+             $logoName = str_replace('public', 'storage', $logoName);
+         }
 
-       return redirect()->route('company.index')->with('info','Company Added Successfully');
-   }
+        $comp = Company::find($request->input('id'))
+                           ->update(['name' => $request->input('name'),
+                                    'email' => $request->input('email'),
+                                    'logo' => $logoName,
+                                    'website' => $request->input('website')]);
 
-   /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-   public function edit($id)
-   {
-       //Find the Company
-       $company = Company::find($id);
-       return view('layouts.company.edit',['company'=> $company]);
-   }
+        return redirect()->route('company.index')->with('info','Company Updated Successfully');
 
-   /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-   public function update(Request $request)
-   {
-       //Retrieve the Company and update
-       $logoName = '';
-       if ($request->file('logo'))
-       {
-            $logoName = $request->file('logo')->store('/public');
-            $logoName = str_replace('public', 'storage', $logoName);
-        }
-       $company = Company::find($request->input('id'));
-       $company->name = $request->input('name');
-       $company->email = $request->input('email');
-       $company->logo = $logoName;
-       $company->website = $request->input('website');
-       $company->save(); //persist the data
+    }
 
-       return redirect()->route('company.index')->with('info','Company Updated Successfully');
-   }
-
-   /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-   public function destroy($id)
-   {
-       //Retrieve the Company
-       $company = Company::find($id);
-       //delete
-       $company->delete();
-       return redirect()->route('company.index');
-   }
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Company  $company
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Company $company)
+    {
+        //
+        $comp = Company::find($company->$id);
+        $comp->delete();
+        return redirect()->route('company.index');
+    }
 }

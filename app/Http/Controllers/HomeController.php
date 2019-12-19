@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use  App\User;
+use  App\Models\User;
 
 class HomeController extends Controller
 {
@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-
+ 
     /**
      * Show the application dashboard.
      *
@@ -38,11 +38,9 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //Retrieve the user
         $users = User::find($id);
-        //delete
         $users->delete();
         return redirect()->route('home');
     }
-    
+
 }

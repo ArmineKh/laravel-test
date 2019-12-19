@@ -23,8 +23,8 @@
             <td> <img src="{{$company->logo}}" alt="Company logo" height="50" width="50"></td>
             <td>{{ $company->email }}</td>
             <td>{{ $company->website }}</td>
-            <td><a href="{{route('company.edit',['id'=>$company->id])}}" class = "btn btn-info">Edit</a></td>
-            <td><a href="{{route('company.destroy',['id'=>$company->id])}}" class = "btn btn-danger">Delete</a></td>
+            <td><a href="{{route('company.edit',$company->id)}}" class = "btn btn-info">Edit</a></td>
+            <td><a href="{{route('company.destroy',$company->id)}}" class = "btn btn-danger">Delete</a></td>
           </tr>
         @endforeach
       </table>

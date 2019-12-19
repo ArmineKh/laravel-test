@@ -4,7 +4,8 @@
 
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <form action="{{route('company.update')}}" method = "post" enctype="multipart/form-data">
+      <form action="{{route('company.update', $company->id)}}" method = "POST" enctype="multipart/form-data">
+        @method('PUT')
         @csrf
         <div class="form-group">
           <label for="name">Name:</label>

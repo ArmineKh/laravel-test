@@ -24,18 +24,22 @@ Auth::routes([
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user/{id}/delete','HomeController@destroy')->name('user.destroy');
 
-// All Routes about Employees
-Route::get('/employees', 'EmployeeController@index')->name('employees.index');
-Route::get('/employees/{id}/edit','EmployeeController@edit')->name('employees.edit');
-Route::get('/employees/{id}/delete','EmployeeController@destroy')->name('employees.destroy');
-Route::get('/create','EmployeeController@create')->name('employees.create');
-Route::post('/create','EmployeeController@store')->name('employees.store');
-Route::post('/employee/update','EmployeeController@update')->name('employees.update');
+Route::resource('company', 'CompanyController');
+Route::resource('employees', 'EmployeeController');
 
-// All Routes about Companyes
-Route::get('/company', 'CompanyController@index')->name('company.index');
-Route::get('/company/{id}/edit','CompanyController@edit')->name('company.edit');
-Route::get('/company/{id}/delete','CompanyController@destroy')->name('company.destroy');
-Route::get('/compCreate','CompanyController@create')->name('company.create');
-Route::post('/compCreate','CompanyController@store')->name('company.store');
-Route::post('/company/update','CompanyController@update')->name('company.update');
+
+// All Routes about Employees
+// Route::get('/employees', 'EmployeeController@index')->name('employees.index');
+// Route::get('/employees/{id}/edit','EmployeeController@edit')->name('employees.edit');
+// Route::get('/employees/{id}/delete','EmployeeController@destroy')->name('employees.destroy');
+// Route::get('/create','EmployeeController@create')->name('employees.create');
+// Route::post('/create','EmployeeController@store')->name('employees.store');
+// Route::post('/employee/update','EmployeeController@update')->name('employees.update');
+//
+// // All Routes about Companyes
+// Route::get('/company', 'CompanyController@index')->name('company.index');
+// Route::get('/company/{id}/edit','CompanyController@edit')->name('company.edit');
+// Route::get('/company/{id}/delete','CompanyController@destroy')->name('company.destroy');
+// Route::get('/compCreate','CompanyController@create')->name('company.create');
+// Route::post('/compCreate','CompanyController@store')->name('company.store');
+// Route::post('/company/update','CompanyController@update')->name('company.update');
