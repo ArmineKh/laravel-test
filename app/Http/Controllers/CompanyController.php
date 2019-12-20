@@ -105,10 +105,10 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
         //
-        $comp = Company::find($company->$id);
+        $comp = Company::find($id);
         $comp->delete();
         return redirect()->route('company.index');
     }

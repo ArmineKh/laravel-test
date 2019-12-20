@@ -2,7 +2,7 @@
 @section('title','Employees Index')
 @section('content')
 <div class="row">
-  <a href="{{url('create')}}" class = "btn btn-info pull-left ">Create</a>
+  <a href="{{route('employees.create')}}" class = "btn btn-info pull-left ">Create</a>
 </div>
   <div class="row">
     <div class="col-sm-12">
@@ -24,8 +24,13 @@
             <td>{{ $employee->company }}</td>
             <td>{{ $employee->email }}</td>
             <td>{{ $employee->phone }}</td>
-            <td><a href="{{route('employees.edit',['id'=>$employee->id])}}" class = "btn btn-info">Edit</a></td>
-            <td><a href="{{route('employees.destroy',['id'=>$employee->id])}}" class = "btn btn-danger">Delete</a></td>
+            <td><a href="{{route('employees.edit',$employee->id)}}" class = "btn btn-info">Edit</a></td>
+            <td>
+              <form id="destroy-form" action="{{ route('employees.destroy', $employee->id) }}" method="POST" >
+                  @method('DELETE')
+                  @csrf
+                  <input type="submit" class="btn btn-danger" value="Delete">
+            </td>
           </tr>
         @endforeach
       </table>

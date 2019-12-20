@@ -4,15 +4,16 @@
 
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <form action="{{route('employees.update')}}" method = "post">
+      <form action="{{route('employees.update', $employee->id)}}" method = "post">
+        @method('PUT')
         @csrf
         <div class="form-group">
           <label for="name">Firstname:</label>
           <input type="text" name = "name" id = "name" class="form-control" required value = "{{$employee->name}}">
         </div>
         <div class="form-group">
-          <label for="lastName">Lastname:</label>
-          <input type="text" name = "lastName" id = "lastName" class="form-control" required value = "{{$employee->lastname}}">
+          <label for="lastname">Lastname:</label>
+          <input type="text" name = "lastname" id = "lastname" class="form-control" required value = "{{$employee->lastname}}">
         </div>
         <div class="form-group">
           <label for="company">Company:</label>

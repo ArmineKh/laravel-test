@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateEmployeeRequest;
+
 
 class EmployeeController extends Controller
 {
@@ -14,8 +16,11 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
-    }
+      $employees = Employee::paginate(10);
+      // $employees = DB::table('employees')->paginate(10);
+      return view('employee.index',['employees'=>$employees]);
+  }
+
 
     /**
      * Show the form for creating a new resource.
@@ -25,6 +30,7 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        return view('employee.create');
     }
 
     /**
@@ -33,21 +39,18 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateEmployeeRequest $request)
     {
         //
+        $employee = Employee::create(['name' => $request->input('name'),
+                                     'lastname' => $request->input('lastname'),
+                                     'company' => $request->input('company'),
+                                     'email' => $request->input('email'),
+                                     'phone' => $request->input('phone')]);
+
+          return redirect()->route('employees.index')->with('info','Employee Added Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Employee $employee)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -55,9 +58,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
         //
+        $employee = Employee::find($id);
+        return view('employee.edit',['employee'=> $employee]);
     }
 
     /**
@@ -67,9 +72,17 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(CreateEmployeeRequest $request, $id)
     {
         //
+        $employee = Employee::find($request->input('id'))
+                         ->update(['name' => $request->input('name'),
+                                   'lastname' => $request->input('lastname'),
+                                   'company' => $request->input('company'),
+                                   'email' => $request->input('email'),
+                                   'phone' => $request->input('phone')]);
+
+        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
     }
 
     /**
@@ -78,8 +91,11 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
         //
+        $employee = Employee::find($id);
+        $employee->delete();
+        return redirect()->route('employees.index');
     }
 }

@@ -11,8 +11,8 @@
          <input type="text" name = "name" id = "name" class="form-control" required>
        </div>
        <div class="form-group">
-         <label for="lastName">Lastname:</label>
-         <input type="text" name = "lastName" id = "lastName" class="form-control" required>
+         <label for="lastname">Lastname:</label>
+         <input type="text" name = "lastname" id = "lastname" class="form-control" required>
        </div>
        <div class="form-group">
          <label for="company">Company:</label>

@@ -3,7 +3,8 @@
 @section('content')
 
 <div class="row">
-  <a href="{{url('compCreate')}}" class = "btn btn-info">Create</a>
+
+  <a href="{{route('company.create')}}" class = "btn btn-info">Create</a>
 </div>
   <div class="row">
     <div class="col-sm-12">
@@ -24,7 +25,14 @@
             <td>{{ $company->email }}</td>
             <td>{{ $company->website }}</td>
             <td><a href="{{route('company.edit',$company->id)}}" class = "btn btn-info">Edit</a></td>
-            <td><a href="{{route('company.destroy',$company->id)}}" class = "btn btn-danger">Delete</a></td>
+            <td>
+              <!-- <a href="{{route('company.destroy',$company->id)}}" class = "btn btn-danger">Delete</a> -->
+              <form id="destroy-form" action="{{ route('company.destroy', $company->id) }}" method="POST" >
+                  @method('DELETE')
+                  @csrf
+                  <input type="submit" class="btn btn-danger" value="Delete">
+              </form>
+            </td>
           </tr>
         @endforeach
       </table>
