@@ -6,7 +6,6 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCompanieRequest;
 use Storage;
-use DB;
 
 class CompanyController extends Controller
 {
@@ -17,9 +16,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
         $companyes = Company::paginate(10);
-      return view('company.index',['companyes'=>$companyes]);
+        return view('company.index',['companyes'=>$companyes]);
     }
 
     /**
@@ -29,8 +27,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
-               return view('company.create');
+        return view('company.create');
     }
 
     /**
@@ -41,21 +38,18 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanieRequest $request)
     {
-        //
+     $logoName = '';
+        if ($request->file('logo'))
+        {
+            $logoName = $request->file('logo')->store('/public');
+            $logoName = str_replace('public', 'storage', $logoName);
+        }
+    $company = Company::create(['name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'logo' => $logoName,
+        'website' => $request->input('website')]);
 
-               $logoName = '';
-                if ($request->file('logo'))
-                {
-                    $logoName = $request->file('logo')->store('/public');
-                    $logoName = str_replace('public', 'storage', $logoName);
-                }
-                $company = Company::create(['name' => $request->input('name'),
-                                            'email' => $request->input('email'),
-                                            'logo' => $logoName,
-                                            'website' => $request->input('website')]);
-
-
-               return redirect()->route('company.index')->with('info','Company Added Successfully');
+    return redirect()->route('company.index')->with('info','Company Added Successfully');
     }
 
 
@@ -67,9 +61,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
-        $comp = Company::find($id);
-        return view('company.edit',['company'=> $comp]);
+        $company = Company::find($id);
+        return view('company.edit',['company'=> $company]);
     }
 
     /**
@@ -81,23 +74,21 @@ class CompanyController extends Controller
      */
     public function update(CreateCompanieRequest $request, $id)
     {
-        //
         $logoName = '';
         if ($request->file('logo'))
         {
-             $logoName = $request->file('logo')->store('/public');
-             $logoName = str_replace('public', 'storage', $logoName);
-         }
+           $logoName = $request->file('logo')->store('/public');
+           $logoName = str_replace('public', 'storage', $logoName);
+       }
 
-        $comp = Company::find($request->input('id'))
-                           ->update(['name' => $request->input('name'),
-                                    'email' => $request->input('email'),
-                                    'logo' => $logoName,
-                                    'website' => $request->input('website')]);
+       $comp = Company::find($request->input('id'))
+       ->update(['name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'logo' => $logoName,
+        'website' => $request->input('website')]);
 
-        return redirect()->route('company.index')->with('info','Company Updated Successfully');
-
-    }
+       return redirect()->route('company.index')->with('info','Company Updated Successfully');
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -107,9 +98,8 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $comp = Company::find($id);
-        $comp->delete();
+        $company = Company::find($id);
+        $company->delete();
         return redirect()->route('company.index');
     }
 }

@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="row">
-
   <a href="{{route('company.create')}}" class = "btn btn-info">Create</a>
 </div>
   <div class="row">
@@ -26,7 +25,6 @@
             <td>{{ $company->website }}</td>
             <td><a href="{{route('company.edit',$company->id)}}" class = "btn btn-info">Edit</a></td>
             <td>
-              <!-- <a href="{{route('company.destroy',$company->id)}}" class = "btn btn-danger">Delete</a> -->
               <form id="destroy-form" action="{{ route('company.destroy', $company->id) }}" method="POST" >
                   @method('DELETE')
                   @csrf

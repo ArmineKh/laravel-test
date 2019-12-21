@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <form action="{{route('employees.update', $employee->id)}}" method = "post">
+      <form action="{{route('employees.update', $employee->id)}}" method = "POST">
         @method('PUT')
         @csrf
         <div class="form-group">
